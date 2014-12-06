@@ -1,14 +1,13 @@
 {
     "name": "popphp/pop-filter",
-    "description": "Pop Filter Component for Pop PHP Framework 2",
+    "description": "Pop Filter Component for Pop PHP Framework",
     "keywords": [
         "filter",
         "string",
         "string filter",
         "php",
         "pop",
-        "pop php",
-        "pop php 2"
+        "pop php"
     ],
     "homepage": "http://www.popphp.org/",
     "license": "New BSD",
@@ -25,6 +24,11 @@
     "autoload": {
         "psr-4": {
             "Pop\\Filter\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
         }
     }
 }
