@@ -49,31 +49,31 @@ class Random
         $case = null; // 'lower', 'upper
 
         switch ($options) {
-            case self::ALPHA: // 1 (mixed case)
+            case self::ALPHA:
                 $type = 'alpha';
                 break;
-            case self::LOWERCASE: // 4 (mixed case)
+            case self::LOWERCASE:
                 $case = 'lower';
                 break;
-            case self::UPPERCASE: // 4 (mixed case)
+            case self::UPPERCASE:
                 $case = 'upper';
                 break;
-            case self::ALPHA|self::LOWERCASE: // 5
+            case self::ALPHA|self::LOWERCASE:
                 $type = 'alpha';
                 $case = 'lower';
                 break;
-            case self::ALPHA|self::UPPERCASE: // 9
+            case self::ALPHA|self::UPPERCASE:
                 $type = 'alpha';
                 $case = 'upper';
                 break;
-            case self::ALPHANUM: // 2 (mixed case)
+            case self::ALPHANUM:
                 $type = 'alphanum';
                 break;
-            case self::ALPHANUM|self::LOWERCASE: // 6
+            case self::ALPHANUM|self::LOWERCASE:
                 $type = 'alphanum';
                 $case = 'lower';
                 break;
-            case self::ALPHANUM|self::UPPERCASE: // 10
+            case self::ALPHANUM|self::UPPERCASE:
                 $type = 'alphanum';
                 $case = 'upper';
                 break;
