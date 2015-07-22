@@ -63,10 +63,10 @@ echo Pop\Filter\Links::filter($text);
 
     <a href="http://www.popphp.org">www.popphp.org</a> is a website.
     Another website is <a href="http://www.google.com/">http://www.google.com/</a>
-    An email address is <a href="mailtot:test@test.com">test@test.com</a>.
+    An email address is <a href="mailto:test@test.com">test@test.com</a>.
 
 The above example filters the text with the proper hyper links around
-the text that matches proper web link pattern. That includes:
+the text that matches the proper patterns. That includes:
 
 * Web or FTP links
     + This includes domains with http, https, ftp or no protocol.
