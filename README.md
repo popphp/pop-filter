@@ -71,3 +71,4 @@ echo Pop\Filter\ConvertCase::camelCaseToSeparator('MyTableUsers');
 ```
 
     My/Table/Users
+
