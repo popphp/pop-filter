@@ -6,8 +6,8 @@ pop-filter
 
 OVERVIEW
 --------
-`pop-filter` is a component for simply filtering and manipulation of strings.
-It mostly provides features like generating URL slugs, random strings, web links
+`pop-filter` is a component for simple filtering and manipulation of strings.
+It provides features like generating URL slugs, random strings, web links
 and case conversion.
 
 `pop-filter`is a component of the [Pop PHP Framework](http://www.popphp.org/).
@@ -30,6 +30,14 @@ echo Pop\Filter\Slug::filter("Hello World What's Up?");
 
     hello-world-whats-up
 
+You can give it a separator to further control the format of the URL slug:
+
+```php
+echo Pop\Filter\Slug::filter("About Us | Company | President", ' | ');
+```
+
+    about-us/company/president
+
 ### Generating a random string
 
 ```php
@@ -39,13 +47,14 @@ echo Random::create(8, Random::ALPHANUM|Random::LOWERCASE);
 
     sjd873k3
 
-The above example generates a random lowercase alphanumeric string
+The above example generates a random, lowercase 8-character alphanumeric string.
 
 ### Generating hyper links
 
 ```php
 $text = <<<TEXT
 www.popphp.org is a website.
+Another website is http://www.google.com/
 An email address is test@test.com.
 TEXT;
 
@@ -53,10 +62,15 @@ echo Pop\Filter\Links::filter($text);
 ```
 
     <a href="http://www.popphp.org">www.popphp.org</a> is a website.
+    Another website is <a href="http://www.google.com/">http://www.google.com/</a>
     An email address is <a href="mailtot:test@test.com">test@test.com</a>.
 
 The above example filters the text with the proper hyper links around
-the text that matches that pattern.
+the text that matches proper web link pattern. That includes:
+
+* Web or FTP links
+    + This includes domains with http, https, ftp or no protocol.
+* Email addresses
 
 ### Converting case
 
