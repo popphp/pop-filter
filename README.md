@@ -2,7 +2,7 @@ pop-filter
 ==========
 
 [![Build Status](https://travis-ci.org/popphp/pop-filter.svg?branch=master)](https://travis-ci.org/popphp/pop-filter)
-[![Coverage Status](http://www.popphp.org/cc/coverage.php?comp=pop-filter)](http://www.popphp.org/cc/pop-filter/)
+[![Coverage Status](http://cc.popphp.org/coverage.php?comp=pop-filter)](http://cc.popphp.org/pop-filter/)
 
 OVERVIEW
 --------
