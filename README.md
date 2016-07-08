@@ -4,6 +4,11 @@ pop-filter
 [![Build Status](https://travis-ci.org/popphp/pop-filter.svg?branch=master)](https://travis-ci.org/popphp/pop-filter)
 [![Coverage Status](http://cc.popphp.org/coverage.php?comp=pop-filter)](http://cc.popphp.org/pop-filter/)
 
+END OF LIFE
+-----------
+The `pop-filter` component v2.1.0 is now end-of-life and will no longer be supported due
+to lack of use.
+
 OVERVIEW
 --------
 `pop-filter` is a component for simple filtering and manipulation of strings.
