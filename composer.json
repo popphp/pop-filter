@@ -10,7 +10,7 @@
         "pop php"
     ],
     "homepage": "http://www.popphp.org/",
-    "license": "New BSD",
+    "license": "\"BSD-3-Clause",
     "authors": [
         {
             "name": "Nick Sagona",
@@ -19,10 +19,10 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0"
+        "php": ">=7.1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "4.6.*"
+        "phpunit/phpunit": "^7.0.0"
     },
     "autoload": {
         "psr-4": {
@@ -36,7 +36,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.1.x-dev"
+            "dev-master": "3.0.x-dev"
         }
     }
 }

@@ -14,7 +14,7 @@
 namespace Pop\Filter;
 
 /**
- * Filter exception class
+ * Filterable interface
  *
  * @category   Pop
  * @package    Pop\Filter
@@ -23,7 +23,38 @@ namespace Pop\Filter;
  * @license    http://www.popphp.org/license     New BSD License
  * @version    3.0.0
  */
-class Exception extends \Exception
+interface FilterableInterface
 {
+
+    /**
+     * Add filter
+     *
+     * @param  FilterInterface $filter
+     * @return FilterableInterface
+     */
+    public function addFilter(FilterInterface $filter);
+
+    /**
+     * Add filters
+     *
+     * @param  array $filters
+     * @return FilterableInterface
+     */
+    public function addFilters(array $filters);
+
+    /**
+     * Clear filters
+     *
+     * @return FilterableInterface
+     */
+    public function clearFilters();
+
+    /**
+     * Filter values
+     *
+     * @param  array $values
+     * @return array
+     */
+    public function filter(array $values);
 
 }

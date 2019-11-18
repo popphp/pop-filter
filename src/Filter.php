@@ -14,7 +14,7 @@
 namespace Pop\Filter;
 
 /**
- * Filter exception class
+ * Filter class
  *
  * @category   Pop
  * @package    Pop\Filter
@@ -23,7 +23,7 @@ namespace Pop\Filter;
  * @license    http://www.popphp.org/license     New BSD License
  * @version    3.0.0
  */
-class Exception extends \Exception
+class Filter extends AbstractFilter
 {
 
 }
