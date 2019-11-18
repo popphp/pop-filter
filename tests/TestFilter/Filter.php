@@ -2,10 +2,12 @@
 
 namespace Pop\Filter\Test\TestFilter;
 
-use Pop\Filter\AbstractFilterable;
+use Pop\Filter\FilterableTrait;
 
-class Filter extends AbstractFilterable
+class Filter
 {
+
+    use FilterableTrait;
 
     /**
      * Filter values

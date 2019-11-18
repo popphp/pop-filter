@@ -44,20 +44,22 @@ $values = [
 ];
 ```
 
-### The Abstract Filterable Class
+### The Filterable Trait
 
-The component comes with an abstract class called `Pop\Filter\AbstractFilterable`. If you
-wish to have the filter component and its features wired into your application, you will
-need to have a class that extends this abstract class. With it, your class will be able
-to add filters and call the methods to filter the necessary values.
+The component comes with trait called `Pop\Filter\FilterableTrait`. If you wish to have
+the filter component and its features wired into your application, you will need to have
+a class that uses this trait. With it, your class will be able to add filters and call
+the methods to filter the necessary values.
 
 ```php
 namespace MyApp\Model
 
-use Pop\Filter\AbstractFilterable;
+use Pop\Filter\FilterableTrait;
 
-class User extends AbstractFilterable
+class User
 {
+    
+    use FilterableTrait;
 
     /**
      * Filter values

@@ -14,7 +14,7 @@
 namespace Pop\Filter;
 
 /**
- * Abstract filterable class
+ * Filterable trait
  *
  * @category   Pop
  * @package    Pop\Filter
@@ -23,7 +23,7 @@ namespace Pop\Filter;
  * @license    http://www.popphp.org/license     New BSD License
  * @version    3.0.0
  */
-abstract class AbstractFilterable implements FilterableInterface
+trait FilterableTrait
 {
 
     /**
@@ -36,7 +36,7 @@ abstract class AbstractFilterable implements FilterableInterface
      * Add filter
      *
      * @param  FilterInterface $filter
-     * @return AbstractFilterable
+     * @return FilterableTrait
      */
     public function addFilter(FilterInterface $filter)
     {
@@ -48,7 +48,7 @@ abstract class AbstractFilterable implements FilterableInterface
      * Add filters
      *
      * @param  array $filters
-     * @return AbstractFilterable
+     * @return FilterableTrait
      */
     public function addFilters(array $filters)
     {
@@ -81,7 +81,7 @@ abstract class AbstractFilterable implements FilterableInterface
     /**
      * Clear filters
      *
-     * @return AbstractFilterable
+     * @return FilterableTrait
      */
     public function clearFilters()
     {
