@@ -69,7 +69,7 @@ class User extends AbstractFilterable
     {
         foreach ($this->filters as $filter) {
             foreach ($values as $key => $value) {
-                $values[$key] = $filter->filter($value, null, $key);
+                $values[$key] = $filter->filter($value, $key);
             }
         }
 
