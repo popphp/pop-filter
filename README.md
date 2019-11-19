@@ -49,7 +49,8 @@ $values = [
 The component comes with a trait called `Pop\Filter\FilterableTrait`. If you wish to have
 the filter component and its features wired into your application, you will need to have
 a class that uses this trait. With it, your class will be able to add filters and call
-the methods to filter the necessary values.
+the methods to filter the necessary values. These filters can either be an instance of
+'Pop\Filter\FilterInterface' (e.g., `Pop\Filter\Filter`) or a basic callable.
 
 ```php
 namespace MyApp\Model
@@ -87,7 +88,7 @@ and filter values with it:
 ```php
 $user = new User();
 $user->addFilters([
-    new Pop\Filter\Filter('strip_tags', null, null, 'username'),
+    'strip_tags',
     new Pop\Filter\Filter('htmlentities', [ENT_QUOTES, 'UTF-8']),
 ]);
 
@@ -110,7 +111,9 @@ $values = [
 ];
 ```
 
-The tags have been stripped and the entities have been converted to HTML.
+The tags have been stripped and the entities have been converted to HTML. Notice the
+first filter added was the callable `strip_tags` and the second filter added was an
+instance of `Pop\Filter\Filter` with parameters.
 
 ### Fine-Grained Control
 

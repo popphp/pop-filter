@@ -35,11 +35,20 @@ trait FilterableTrait
     /**
      * Add filter
      *
-     * @param  FilterInterface $filter
+     * @param  mixed $filter
+     * @throws \InvalidArgumentException
      * @return FilterableTrait
      */
-    public function addFilter(FilterInterface $filter)
+    public function addFilter($filter)
     {
+        if (!($filter instanceof FilterInterface) && is_callable($filter)) {
+            $filter = new Filter($filter);
+        }
+        if (!($filter instanceof FilterInterface)) {
+            throw new \InvalidArgumentException(
+                'Error: The filter must be a callable or an instance of Pop\Filter\FilterInterface.'
+            );
+        }
         $this->filters[] = $filter;
         return $this;
     }

@@ -17,6 +17,21 @@ class FilterableTest extends TestCase
         $this->assertEquals(2, count($filter->getFilters()));
     }
 
+    public function testAddCallableFilter()
+    {
+        $filter = new TestFilter\Filter();
+        $filter->addFilter('strip_tags');
+        $this->assertTrue($filter->hasFilters());
+        $this->assertEquals(1, count($filter->getFilters()));
+    }
+
+    public function testAddFilterException()
+    {
+        $this->expectException('InvalidArgumentException');
+        $filter = new TestFilter\Filter();
+        $filter->addFilter('bad');
+    }
+
     public function testClearFilters()
     {
         $filter = new TestFilter\Filter();
