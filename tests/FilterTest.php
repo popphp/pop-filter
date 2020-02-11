@@ -21,6 +21,12 @@ class FilterTest extends TestCase
         $this->assertNotEmpty($filter->getExcludeByName());
     }
 
+    public function testSetParams()
+    {
+        $filter = new Filter('htmlentities', [ENT_QUOTES, 'UTF-8'], 'email', 'email');
+        $this->assertTrue($filter->hasParams());
+    }
+
     public function testFilterValue()
     {
         $filter = new Filter('strip_tags');

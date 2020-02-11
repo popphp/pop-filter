@@ -13,6 +13,8 @@
  */
 namespace Pop\Filter;
 
+use Pop\Utils\CallableObject;
+
 /**
  * Abstract filter class
  *
@@ -28,15 +30,9 @@ abstract class AbstractFilter implements FilterInterface
 
     /**
      * Filter callable
-     * @var callable
+     * @var CallableObject
      */
     protected $callable = null;
-
-    /**
-     * Parameters
-     * @var array
-     */
-    protected $params = [];
 
     /**
      * Exclude by type
@@ -55,12 +51,12 @@ abstract class AbstractFilter implements FilterInterface
      *
      * Instantiate the form filter object
      *
-     * @param  callable $callable
-     * @param  mixed    $params
-     * @param  mixed    $excludeByName
-     * @param  mixed    $excludeByType
+     * @param  mixed $callable
+     * @param  mixed $params
+     * @param  mixed $excludeByName
+     * @param  mixed $excludeByType
      */
-    public function __construct(callable $callable, $params = null, $excludeByName = null, $excludeByType = null)
+    public function __construct($callable, $params = null, $excludeByName = null, $excludeByType = null)
     {
         $this->setCallable($callable);
 
@@ -78,11 +74,14 @@ abstract class AbstractFilter implements FilterInterface
     /**
      * Set callable
      *
-     * @param  callable $callable
+     * @param  mixed $callable
      * @return AbstractFilter
      */
-    public function setCallable(callable $callable)
+    public function setCallable($callable)
     {
+        if (!($callable instanceof CallableObject)) {
+            $callable = new CallableObject($callable);
+        }
         $this->callable = $callable;
         return $this;
     }
@@ -95,10 +94,11 @@ abstract class AbstractFilter implements FilterInterface
      */
     public function setParams($params)
     {
-        if (!is_array($params)) {
-            $params = [$params];
+        if (is_array($params)) {
+            $this->callable->setParameters($params);
+        } else {
+            $this->callable->setParameters([$params]);
         }
-        $this->params = $params;
 
         return $this;
     }
@@ -138,7 +138,7 @@ abstract class AbstractFilter implements FilterInterface
     /**
      * Get callable
      *
-     * @return callable
+     * @return CallableObject
      */
     public function getCallable()
     {
@@ -152,7 +152,7 @@ abstract class AbstractFilter implements FilterInterface
      */
     public function getParams()
     {
-        return $this->params;
+        return $this->callable->getParameters();
     }
 
     /**
@@ -192,7 +192,7 @@ abstract class AbstractFilter implements FilterInterface
      */
     public function hasParams()
     {
-        return (!empty($this->params));
+        return $this->callable->hasParameters();
     }
 
     /**
@@ -229,12 +229,14 @@ abstract class AbstractFilter implements FilterInterface
             ((null === $name) || (!in_array($name, $this->excludeByName)))) {
             if (is_array($value)) {
                 foreach ($value as $k => $v) {
-                    $params    = array_merge([$v], $this->params);
-                    $value[$k] = call_user_func_array($this->callable, $params);
+                    $params    = array_merge([$v], $this->callable->getParameters());
+                    $this->callable->setParameters($params);
+                    $value[$k] = $this->callable->call();
                 }
             } else {
-                $params = array_merge([$value], $this->params);
-                $value  = call_user_func_array($this->callable, $params);
+                $params = array_merge([$value], $this->callable->getParameters());
+                $this->callable->setParameters($params);
+                $value  = $this->callable->call();
             }
         }
 

@@ -13,6 +13,8 @@
  */
 namespace Pop\Filter;
 
+use Pop\Utils\CallableObject;
+
 /**
  * Filter interface
  *
@@ -29,10 +31,10 @@ interface FilterInterface
     /**
      * Set callable
      *
-     * @param  callable $callable
+     * @param  mixed $callable
      * @return FilterInterface
      */
-    public function setCallable(callable $callable);
+    public function setCallable($callable);
 
     /**
      * Set params
@@ -61,7 +63,7 @@ interface FilterInterface
     /**
      * Get callable
      *
-     * @return callable
+     * @return CallableObject
      */
     public function getCallable();
 
