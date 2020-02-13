@@ -229,14 +229,22 @@ abstract class AbstractFilter implements FilterInterface
             ((null === $name) || (!in_array($name, $this->excludeByName)))) {
             if (is_array($value)) {
                 foreach ($value as $k => $v) {
-                    $params    = array_merge([$v], $this->callable->getParameters());
+                    $callableParams = $this->callable->getParameters();
+                    $params         = array_merge([$v], $callableParams);
                     $this->callable->setParameters($params);
+
                     $value[$k] = $this->callable->call();
+
+                    $this->callable->setParameters($callableParams);
                 }
             } else {
-                $params = array_merge([$value], $this->callable->getParameters());
+                $callableParams = $this->callable->getParameters();
+                $params         = array_merge([$value], $callableParams);
                 $this->callable->setParameters($params);
-                $value  = $this->callable->call();
+
+                $value = $this->callable->call();
+
+                $this->callable->setParameters($callableParams);
             }
         }
 
