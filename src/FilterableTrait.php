@@ -116,9 +116,9 @@ trait FilterableTrait
     /**
      * Filter values
      *
-     * @param  array $values
+     * @param  mixed $values
      * @return array
      */
-    abstract public function filter(array $values);
+    abstract public function filter($values);
 
 }
