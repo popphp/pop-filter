@@ -15,7 +15,7 @@ class Filter
      * @param  array $values
      * @return array
      */
-    public function filter(array $values)
+    public function filter($values)
     {
         foreach ($this->filters as $filter) {
             foreach ($values as $key => $value) {
