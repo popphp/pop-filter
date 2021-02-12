@@ -12,7 +12,7 @@ class Filter
     /**
      * Filter values
      *
-     * @param  array $values
+     * @param  mixed $values
      * @return array
      */
     public function filter($values)
