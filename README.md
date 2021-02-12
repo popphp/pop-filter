@@ -1,7 +1,7 @@
 pop-filter
 ==========
 
-[![Build Status](https://travis-ci.org/popphp/pop-filter.svg?branch=master)](https://travis-ci.org/popphp/pop-filter)
+[![Build Status](https://github.com/popphp/pop-filter/workflows/phpunit/badge.svg)](https://github.com/popphp/pop-filter/actions)
 [![Coverage Status](http://cc.popphp.org/coverage.php?comp=pop-filter)](http://cc.popphp.org/pop-filter/)
 
 OVERVIEW
