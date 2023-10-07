@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -21,9 +21,9 @@ use Pop\Utils\CallableObject;
  * @category   Pop
  * @package    Pop\Filter
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.2.0
+ * @version    4.0.0
  */
 abstract class AbstractFilter implements FilterInterface
 {
@@ -32,19 +32,19 @@ abstract class AbstractFilter implements FilterInterface
      * Filter callable
      * @var CallableObject
      */
-    protected $callable = null;
+    protected ?CallableObject $callable = null;
 
     /**
      * Exclude by type
      * @var array
      */
-    protected $excludeByType = [];
+    protected array $excludeByType = [];
 
     /**
      * Exclude by name
      * @var array
      */
-    protected $excludeByName = [];
+    protected array $excludeByName = [];
 
     /**
      * Constructor
@@ -56,17 +56,17 @@ abstract class AbstractFilter implements FilterInterface
      * @param  mixed $excludeByName
      * @param  mixed $excludeByType
      */
-    public function __construct($callable, $params = null, $excludeByName = null, $excludeByType = null)
+    public function __construct(mixed $callable, mixed $params = null, mixed $excludeByName = null, mixed $excludeByType = null)
     {
         $this->setCallable($callable);
 
-        if (null !== $params) {
+        if ($params !== null) {
             $this->setParams($params);
         }
-        if (null !== $excludeByName) {
+        if ($excludeByName !== null) {
             $this->setExcludeByName($excludeByName);
         }
-        if (null !== $excludeByType) {
+        if ($excludeByType !== null) {
             $this->setExcludeByType($excludeByType);
         }
     }
@@ -77,7 +77,7 @@ abstract class AbstractFilter implements FilterInterface
      * @param  mixed $callable
      * @return AbstractFilter
      */
-    public function setCallable($callable)
+    public function setCallable(mixed $callable): AbstractFilter
     {
         if (!($callable instanceof CallableObject)) {
             $callable = new CallableObject($callable);
@@ -92,7 +92,7 @@ abstract class AbstractFilter implements FilterInterface
      * @param  mixed $params
      * @return AbstractFilter
      */
-    public function setParams($params)
+    public function setParams(mixed $params): AbstractFilter
     {
         if (is_array($params)) {
             $this->callable->setParameters($params);
@@ -109,7 +109,7 @@ abstract class AbstractFilter implements FilterInterface
      * @param  mixed $excludeByName
      * @return AbstractFilter
      */
-    public function setExcludeByName($excludeByName)
+    public function setExcludeByName(mixed $excludeByName): AbstractFilter
     {
         if (!is_array($excludeByName)) {
             $excludeByName = [$excludeByName];
@@ -125,7 +125,7 @@ abstract class AbstractFilter implements FilterInterface
      * @param  mixed $excludeByType
      * @return AbstractFilter
      */
-    public function setExcludeByType($excludeByType)
+    public function setExcludeByType(mixed $excludeByType): AbstractFilter
     {
         if (!is_array($excludeByType)) {
             $excludeByType = [$excludeByType];
@@ -140,7 +140,7 @@ abstract class AbstractFilter implements FilterInterface
      *
      * @return CallableObject
      */
-    public function getCallable()
+    public function getCallable(): CallableObject
     {
         return $this->callable;
     }
@@ -150,7 +150,7 @@ abstract class AbstractFilter implements FilterInterface
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return $this->callable->getParameters();
     }
@@ -160,7 +160,7 @@ abstract class AbstractFilter implements FilterInterface
      *
      * @return array
      */
-    public function getExcludeByName()
+    public function getExcludeByName(): array
     {
         return $this->excludeByName;
     }
@@ -170,7 +170,7 @@ abstract class AbstractFilter implements FilterInterface
      *
      * @return array
      */
-    public function getExcludeByType()
+    public function getExcludeByType(): array
     {
         return $this->excludeByType;
     }
@@ -178,19 +178,19 @@ abstract class AbstractFilter implements FilterInterface
     /**
      * Has callable
      *
-     * @return boolean
+     * @return bool
      */
-    public function hasCallable()
+    public function hasCallable(): bool
     {
-        return (null !== $this->callable);
+        return ($this->callable !== null);
     }
 
     /**
      * Has params
      *
-     * @return boolean
+     * @return bool
      */
-    public function hasParams()
+    public function hasParams(): bool
     {
         return $this->callable->hasParameters();
     }
@@ -198,9 +198,9 @@ abstract class AbstractFilter implements FilterInterface
     /**
      * Has exclude by name
      *
-     * @return boolean
+     * @return bool
      */
-    public function hasExcludeByName()
+    public function hasExcludeByName(): bool
     {
         return (!empty($this->excludeByName));
     }
@@ -208,9 +208,9 @@ abstract class AbstractFilter implements FilterInterface
     /**
      * Has exclude by type
      *
-     * @return boolean
+     * @return bool
      */
-    public function hasExcludeByType()
+    public function hasExcludeByType(): bool
     {
         return (!empty($this->excludeByType));
     }
@@ -218,15 +218,15 @@ abstract class AbstractFilter implements FilterInterface
     /**
      * Filter value
      *
-     * @param  mixed  $value
-     * @param  string $name
-     * @param  mixed  $type
+     * @param  mixed   $value
+     * @param  ?string $name
+     * @param  mixed   $type
      * @return mixed
      */
-    public function filter($value, $name = null, $type = null)
+    public function filter(mixed $value, ?string $name = null, mixed $type = null): mixed
     {
-        if (((null === $type) || (!in_array($type, $this->excludeByType))) &&
-            ((null === $name) || (!in_array($name, $this->excludeByName)))) {
+        if ((($type === null) || (!in_array($type, $this->excludeByType))) &&
+            (($name === null) || (!in_array($name, $this->excludeByName)))) {
             if (is_array($value)) {
                 foreach ($value as $k => $v) {
                     $callableParams = $this->callable->getParameters();

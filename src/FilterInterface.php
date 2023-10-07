@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -21,9 +21,9 @@ use Pop\Utils\CallableObject;
  * @category   Pop
  * @package    Pop\Filter
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.2.0
+ * @version    4.0.0
  */
 interface FilterInterface
 {
@@ -34,7 +34,7 @@ interface FilterInterface
      * @param  mixed $callable
      * @return FilterInterface
      */
-    public function setCallable($callable);
+    public function setCallable(mixed $callable): FilterInterface;
 
     /**
      * Set params
@@ -42,7 +42,7 @@ interface FilterInterface
      * @param  mixed $params
      * @return FilterInterface
      */
-    public function setParams($params);
+    public function setParams(mixed $params): FilterInterface;
 
     /**
      * Set exclude by name
@@ -50,7 +50,7 @@ interface FilterInterface
      * @param  mixed $excludeByName
      * @return FilterInterface
      */
-    public function setExcludeByName($excludeByName);
+    public function setExcludeByName(mixed $excludeByName): FilterInterface;
 
     /**
      * Set exclude by type
@@ -58,72 +58,72 @@ interface FilterInterface
      * @param  mixed $excludeByType
      * @return FilterInterface
      */
-    public function setExcludeByType($excludeByType);
+    public function setExcludeByType(mixed $excludeByType): FilterInterface;
 
     /**
      * Get callable
      *
      * @return CallableObject
      */
-    public function getCallable();
+    public function getCallable(): CallableObject;
 
     /**
      * Get params
      *
      * @return array
      */
-    public function getParams();
+    public function getParams(): array;
 
     /**
      * Get exclude by name
      *
      * @return array
      */
-    public function getExcludeByName();
+    public function getExcludeByName(): array;
 
     /**
      * Get exclude by type
      *
      * @return array
      */
-    public function getExcludeByType();
+    public function getExcludeByType(): array;
 
     /**
      * Has callable
      *
-     * @return boolean
+     * @return bool
      */
-    public function hasCallable();
+    public function hasCallable(): bool;
 
     /**
      * Has params
      *
-     * @return boolean
+     * @return bool
      */
-    public function hasParams();
+    public function hasParams(): bool;
 
     /**
      * Has exclude by name
      *
-     * @return boolean
+     * @return bool
      */
-    public function hasExcludeByName();
+    public function hasExcludeByName(): bool;
 
     /**
      * Has exclude by type
      *
-     * @return boolean
+     * @return bool
      */
-    public function hasExcludeByType();
+    public function hasExcludeByType(): bool;
 
     /**
      * Filter value
      *
-     * @param  mixed  $value
-     * @param  string $name
-     * @param  mixed  $type
+     * @param  mixed   $value
+     * @param  ?string $name
+     * @param  mixed   $type
      * @return mixed
      */
-    public function filter($value, $name = null, $type = null);
+    public function filter(mixed $value, ?string $name = null, mixed $type = null): mixed;
 
 }

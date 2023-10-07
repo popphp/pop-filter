@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
  */
 
@@ -13,15 +13,17 @@
  */
 namespace Pop\Filter;
 
+use InvalidArgumentException;
+
 /**
  * Filterable trait
  *
  * @category   Pop
  * @package    Pop\Filter
  * @author     Nick Sagona, III <dev@nolainteractive.com>
- * @copyright  Copyright (c) 2009-2023 NOLA Interactive, LLC. (http://www.nolainteractive.com)
+ * @copyright  Copyright (c) 2009-2024 NOLA Interactive, LLC. (http://www.nolainteractive.com)
  * @license    http://www.popphp.org/license     New BSD License
- * @version    3.2.0
+ * @version    4.0.0
  */
 trait FilterableTrait
 {
@@ -30,16 +32,16 @@ trait FilterableTrait
      * Form filters
      * @var array
      */
-    protected $filters = [];
+    protected array $filters = [];
 
     /**
      * Add filter
      *
      * @param  mixed $filter
-     * @throws \InvalidArgumentException
-     * @return FilterableTrait
+     * @throws InvalidArgumentException
+     * @return static
      */
-    public function addFilter($filter)
+    public function addFilter(mixed $filter): static
     {
         if (!($filter instanceof FilterInterface) && is_callable($filter)) {
             $filter = new Filter($filter);
@@ -57,9 +59,9 @@ trait FilterableTrait
      * Add filters
      *
      * @param  array $filters
-     * @return FilterableTrait
+     * @return static
      */
-    public function addFilters(array $filters)
+    public function addFilters(array $filters): static
     {
         foreach ($filters as $filter) {
             $this->addFilter($filter);
@@ -70,9 +72,9 @@ trait FilterableTrait
     /**
      * Has filters
      *
-     * @return boolean
+     * @return bool
      */
-    public function hasFilters()
+    public function hasFilters(): bool
     {
         return (count($this->filters) > 0);
     }
@@ -82,7 +84,7 @@ trait FilterableTrait
      *
      * @return array
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return $this->filters;
     }
@@ -90,9 +92,9 @@ trait FilterableTrait
     /**
      * Clear filters
      *
-     * @return FilterableTrait
+     * @return static
      */
-    public function clearFilters()
+    public function clearFilters(): static
     {
         $this->filters = [];
         return $this;
@@ -104,7 +106,7 @@ trait FilterableTrait
      * @param  array $values
      * @return array
      */
-    public function filterAll(array $values)
+    public function filterAll(array $values): array
     {
         foreach ($this->filters as $filter) {
             $values = array_map([$filter, 'filter'], $values);
@@ -119,6 +121,6 @@ trait FilterableTrait
      * @param  mixed $values
      * @return array
      */
-    abstract public function filter($values);
+    abstract public function filter(mixed $values): array;
 
 }

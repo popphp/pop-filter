@@ -19,6 +19,12 @@ Install `pop-filter` using Composer.
 
     composer require popphp/pop-filter
 
+Or, require it in your composer.json file
+
+    "require": {
+        "popphp/pop-filter" : "4.0.*"
+    }
+
 BASIC USAGE
 -----------
 

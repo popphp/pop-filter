@@ -15,7 +15,7 @@ class Filter
      * @param  mixed $values
      * @return array
      */
-    public function filter($values)
+    public function filter(mixed $values): array
     {
         foreach ($this->filters as $filter) {
             foreach ($values as $key => $value) {
