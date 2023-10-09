@@ -119,8 +119,8 @@ trait FilterableTrait
      * Filter values
      *
      * @param  mixed $values
-     * @return array
+     * @return mixed
      */
-    abstract public function filter(mixed $values): array;
+    abstract public function filter(mixed $values): mixed;
 
 }
