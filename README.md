@@ -73,7 +73,7 @@ Extending
 The component comes with a trait called `Pop\Filter\FilterableTrait`. If you wish to have the filter
 component and its features included in your application, you can create a class that uses this trait.
 With it, your class will be able to add filters and call the methods to filter the necessary values.
-These filters can either be an instance of 'Pop\Filter\FilterInterface' (e.g., `Pop\Filter\Filter`)
+These filters can either be an instance of `Pop\Filter\FilterInterface` (e.g., `Pop\Filter\Filter`)
 or a basic callable.
 
 ```php
