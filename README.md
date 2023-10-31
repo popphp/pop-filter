@@ -4,15 +4,26 @@ pop-filter
 [![Build Status](https://github.com/popphp/pop-filter/workflows/phpunit/badge.svg)](https://github.com/popphp/pop-filter/actions)
 [![Coverage Status](http://cc.popphp.org/coverage.php?comp=pop-filter)](http://cc.popphp.org/pop-filter/)
 
-OVERVIEW
+[![Join the chat at https://popphp.slack.com](https://media.popphp.org/img/slack.svg)](https://popphp.slack.com)
+[![Join the chat at https://discord.gg/D9JBxPa5](https://media.popphp.org/img/discord.svg)](https://discord.gg/D9JBxPa5)
+
+* [Overview](#overview)
+* [Install](#install)
+* [Quickstart](#quickstart)
+* [Extending](#extending)
+* [Excludes](#excludes)
+
+Overview
 --------
-`pop-filter` is a component for applying filtering callbacks to multiple values that need
-to be consumed by other areas of an application. It can be used for input security as well
-general input clean-up as well. 
+`pop-filter` is a component for applying filtering callbacks to values that need to be
+consumed by other areas of an application. It can be used for input security as well
+general input scrubbing as well. 
 
 `pop-filter` is a component of the [Pop PHP Framework](http://www.popphp.org/).
 
-INSTALL
+[Top](#pop-filter)
+
+Install
 -------
 
 Install `pop-filter` using Composer.
@@ -25,8 +36,10 @@ Or, require it in your composer.json file
         "popphp/pop-filter" : "^4.0.0"
     }
 
-BASIC USAGE
------------
+[Top](#pop-filter)
+
+Quickstart
+----------
 
 ### Simple Filter
 
@@ -50,13 +63,18 @@ $values = [
 ];
 ```
 
+[Top](#pop-filter)
+
+Extending
+---------
+
 ### The Filterable Trait
 
-The component comes with a trait called `Pop\Filter\FilterableTrait`. If you wish to have
-the filter component and its features wired into your application, you will need to have
-a class that uses this trait. With it, your class will be able to add filters and call
-the methods to filter the necessary values. These filters can either be an instance of
-'Pop\Filter\FilterInterface' (e.g., `Pop\Filter\Filter`) or a basic callable.
+The component comes with a trait called `Pop\Filter\FilterableTrait`. If you wish to have the filter
+component and its features included in your application, you can create a class that uses this trait.
+With it, your class will be able to add filters and call the methods to filter the necessary values.
+These filters can either be an instance of 'Pop\Filter\FilterInterface' (e.g., `Pop\Filter\Filter`)
+or a basic callable.
 
 ```php
 namespace MyApp\Model
@@ -88,8 +106,7 @@ class User
 } 
 ```
 
-With the above code, you can create a user model, add filters to it
-and filter values with it:
+With the above code, you can create a user model, add filters to it and filter values with it:
 
 ```php
 $user = new User();
@@ -120,6 +137,11 @@ $values = [
 The tags have been stripped and the entities have been converted to HTML. Notice the
 first filter added was the callable `strip_tags` and the second filter added was an
 instance of `Pop\Filter\Filter` with parameters.
+
+[Top](#pop-filter)
+
+Excludes
+--------
 
 ### Fine-Grained Control
 
@@ -153,3 +175,5 @@ $values = [
 The fourth parameter of the filter constructor is `$excludeByType` and that is useful for
 excluding a number of values at once that are all of the same type, for example, textareas
 within a form object.
+
+[Top](#pop-filter)
