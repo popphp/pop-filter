@@ -4,7 +4,6 @@ pop-filter
 [![Build Status](https://github.com/popphp/pop-filter/workflows/phpunit/badge.svg)](https://github.com/popphp/pop-filter/actions)
 [![Coverage Status](http://cc.popphp.org/coverage.php?comp=pop-filter)](http://cc.popphp.org/pop-filter/)
 
-[![Join the chat at https://popphp.slack.com](https://media.popphp.org/img/slack.svg)](https://popphp.slack.com)
 [![Join the chat at https://discord.gg/TZjgT74U7E](https://media.popphp.org/img/discord.svg)](https://discord.gg/TZjgT74U7E)
 
 * [Overview](#overview)
@@ -19,7 +18,7 @@ Overview
 consumed by other areas of an application. It can be used for input security as well
 general input scrubbing as well. 
 
-`pop-filter` is a component of the [Pop PHP Framework](http://www.popphp.org/).
+`pop-filter` is a component of the [Pop PHP Framework](https://www.popphp.org/).
 
 [Top](#pop-filter)
 
