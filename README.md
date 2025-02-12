@@ -32,7 +32,7 @@ Install `pop-filter` using Composer.
 Or, require it in your composer.json file
 
     "require": {
-        "popphp/pop-filter" : "^4.0.2"
+        "popphp/pop-filter" : "^4.0.3"
     }
 
 [Top](#pop-filter)
