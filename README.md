@@ -11,6 +11,7 @@ pop-filter
 * [Quickstart](#quickstart)
 * [Extending](#extending)
 * [Excludes](#excludes)
+* [Filtering Multiple Named Values](#filtering-multiple-named-values)
 
 Overview
 --------
@@ -32,7 +33,7 @@ Install `pop-filter` using Composer.
 Or, require it in your composer.json file
 
     "require": {
-        "popphp/pop-filter" : "^4.0.4"
+        "popphp/pop-filter" : "^4.1.0"
     }
 
 [Top](#pop-filter)
@@ -174,5 +175,29 @@ $values = [
 The fourth parameter of the filter constructor is `$excludeByType` and that is useful for
 excluding a number of values at once that are all of the same type, for example, textareas
 within a form object.
+
+[Top](#pop-filter)
+
+Filtering Multiple Named Values
+--------------------------------
+
+When a class uses `Pop\Filter\FilterableTrait` and wants exclude-by-name support (rather than the blanket
+`filterAll()`), it can call the trait's `filterEach()` method instead of hand-writing the loop shown above:
+
+```php
+class User
+{
+    use FilterableTrait;
+
+    public function filter(array $values): array
+    {
+        return $this->filterEach($values);
+    }
+}
+```
+
+`filterEach()` passes each array key through as the `$name` argument to every registered filter, so
+`excludeByName` is honored automatically. It does not have any notion of a value's `$type` — a class that
+needs `excludeByType` support as well still needs its own loop with a way to look up each value's type.
 
 [Top](#pop-filter)

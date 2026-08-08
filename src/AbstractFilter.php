@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@noladev.com>
- * @copyright  Copyright (c) 2009-2026 NOLA Interactive, LLC.
+ * @copyright  Copyright (c) 2009-2027 NOLA Interactive, LLC.
  * @license    https://www.popphp.org/license     New BSD License
  */
 
@@ -21,9 +21,9 @@ use Pop\Utils\CallableObject;
  * @category   Pop
  * @package    Pop\Filter
  * @author     Nick Sagona, III <dev@noladev.com>
- * @copyright  Copyright (c) 2009-2026 NOLA Interactive, LLC.
+ * @copyright  Copyright (c) 2009-2027 NOLA Interactive, LLC.
  * @license    https://www.popphp.org/license     New BSD License
- * @version    4.0.4
+ * @version    4.1.0
  */
 abstract class AbstractFilter implements FilterInterface
 {
@@ -94,10 +94,12 @@ abstract class AbstractFilter implements FilterInterface
      */
     public function setParams(mixed $params): AbstractFilter
     {
-        if (is_array($params)) {
-            $this->callable->setParameters($params);
-        } else {
-            $this->callable->setParameters([$params]);
+        if ($this->callable !== null) {
+            if (is_array($params)) {
+                $this->callable->setParameters($params);
+            } else {
+                $this->callable->setParameters([$params]);
+            }
         }
 
         return $this;
@@ -138,11 +140,22 @@ abstract class AbstractFilter implements FilterInterface
     /**
      * Get callable
      *
-     * @return CallableObject
+     * @return ?CallableObject
      */
-    public function getCallable(): CallableObject
+    public function getCallable(): ?CallableObject
     {
         return $this->callable;
+    }
+
+    /**
+     * Remove callable
+     *
+     * @return AbstractFilter
+     */
+    public function removeCallable(): AbstractFilter
+    {
+        $this->callable = null;
+        return $this;
     }
 
     /**
@@ -152,7 +165,7 @@ abstract class AbstractFilter implements FilterInterface
      */
     public function getParams(): array
     {
-        return $this->callable->getParameters();
+        return ($this->callable !== null) ? $this->callable->getParameters() : [];
     }
 
     /**
@@ -192,7 +205,7 @@ abstract class AbstractFilter implements FilterInterface
      */
     public function hasParams(): bool
     {
-        return $this->callable->hasParameters();
+        return ($this->callable !== null) && $this->callable->hasParameters();
     }
 
     /**
@@ -225,30 +238,38 @@ abstract class AbstractFilter implements FilterInterface
      */
     public function filter(mixed $value, ?string $name = null, mixed $type = null): mixed
     {
-        if ((($type === null) || (!in_array($type, $this->excludeByType))) &&
+        if (($this->callable !== null) &&
+            (($type === null) || (!in_array($type, $this->excludeByType))) &&
             (($name === null) || (!in_array($name, $this->excludeByName)))) {
             if (is_array($value)) {
                 foreach ($value as $k => $v) {
-                    $callableParams = $this->callable->getParameters();
-                    $params         = array_merge([$v], $callableParams);
-                    $this->callable->setParameters($params);
-
-                    $value[$k] = $this->callable->call();
-
-                    $this->callable->setParameters($callableParams);
+                    $value[$k] = is_array($v) ? $this->filter($v, $name, $type) : $this->callCallable($v);
                 }
             } else {
-                $callableParams = $this->callable->getParameters();
-                $params         = array_merge([$value], $callableParams);
-                $this->callable->setParameters($params);
-
-                $value = $this->callable->call();
-
-                $this->callable->setParameters($callableParams);
+                $value = $this->callCallable($value);
             }
         }
 
         return $value;
+    }
+
+    /**
+     * Call the filter callable with the value prepended to its configured params
+     *
+     * @param  mixed $value
+     * @return mixed
+     */
+    protected function callCallable(mixed $value): mixed
+    {
+        $callableParams = $this->callable->getParameters();
+        $params         = array_merge([$value], $callableParams);
+        $this->callable->setParameters($params);
+
+        $result = $this->callable->call();
+
+        $this->callable->setParameters($callableParams);
+
+        return $result;
     }
 
 }

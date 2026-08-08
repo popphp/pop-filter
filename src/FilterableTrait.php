@@ -4,7 +4,7 @@
  *
  * @link       https://github.com/popphp/popphp-framework
  * @author     Nick Sagona, III <dev@noladev.com>
- * @copyright  Copyright (c) 2009-2026 NOLA Interactive, LLC.
+ * @copyright  Copyright (c) 2009-2027 NOLA Interactive, LLC.
  * @license    https://www.popphp.org/license     New BSD License
  */
 
@@ -21,9 +21,9 @@ use InvalidArgumentException;
  * @category   Pop
  * @package    Pop\Filter
  * @author     Nick Sagona, III <dev@noladev.com>
- * @copyright  Copyright (c) 2009-2026 NOLA Interactive, LLC.
+ * @copyright  Copyright (c) 2009-2027 NOLA Interactive, LLC.
  * @license    https://www.popphp.org/license     New BSD License
- * @version    4.0.4
+ * @version    4.1.0
  */
 trait FilterableTrait
 {
@@ -80,6 +80,33 @@ trait FilterableTrait
     }
 
     /**
+     * Has filter
+     *
+     * @param  FilterInterface $filter
+     * @return bool
+     */
+    public function hasFilter(FilterInterface $filter): bool
+    {
+        return in_array($filter, $this->filters, true);
+    }
+
+    /**
+     * Remove filter
+     *
+     * @param  FilterInterface $filter
+     * @return static
+     */
+    public function removeFilter(FilterInterface $filter): static
+    {
+        $this->filters = array_values(array_filter(
+            $this->filters,
+            fn($f) => $f !== $filter
+        ));
+
+        return $this;
+    }
+
+    /**
      * Get filters
      *
      * @return array
@@ -110,6 +137,23 @@ trait FilterableTrait
     {
         foreach ($this->filters as $filter) {
             $values = array_map([$filter, 'filter'], $values);
+        }
+
+        return $values;
+    }
+
+    /**
+     * Filter each value, keyed by name, honoring each filter's excludeByName rules
+     *
+     * @param  array $values
+     * @return array
+     */
+    public function filterEach(array $values): array
+    {
+        foreach ($this->filters as $filter) {
+            foreach ($values as $key => $value) {
+                $values[$key] = $filter->filter($value, (string)$key);
+            }
         }
 
         return $values;

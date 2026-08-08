@@ -17,13 +17,7 @@ class Filter
      */
     public function filter(mixed $values): array
     {
-        foreach ($this->filters as $filter) {
-            foreach ($values as $key => $value) {
-                $values[$key] = $filter->filter($value);
-            }
-        }
-
-        return $values;
+        return $this->filterEach($values);
     }
 
 }
