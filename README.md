@@ -11,7 +11,6 @@ pop-filter
 * [Quickstart](#quickstart)
 * [Extending](#extending)
 * [Excludes](#excludes)
-* [Filtering Multiple Named Values](#filtering-multiple-named-values)
 
 Overview
 --------
@@ -77,13 +76,13 @@ These filters can either be an instance of `Pop\Filter\FilterInterface` (e.g., `
 or a basic callable.
 
 ```php
-namespace MyApp\Model
+namespace MyApp\Model;
 
 use Pop\Filter\FilterableTrait;
 
 class User
 {
-    
+
     use FilterableTrait;
 
     /**
@@ -92,18 +91,30 @@ class User
      * @param  array $values
      * @return array
      */
-    public function filter(array $values)
+    public function filter(array $values): array
     {
-        foreach ($this->filters as $filter) {
-            foreach ($values as $key => $value) {
-                $values[$key] = $filter->filter($value, $key);
-            }
-        }
-
-        return $values;
+        return $this->filterEach($values);
     }
 
-} 
+}
+```
+
+`filterEach()` runs every registered filter over every value in `$values`, passing each array key through
+as the `$name` argument to the filter's `filter()` method — so each filter's `excludeByName` rules are
+honored automatically. It has no notion of a value's `$type`; a class that also needs `excludeByType`
+support has to write its own loop with a way to look up each value's type, e.g.:
+
+```php
+public function filter(array $values): array
+{
+    foreach ($this->filters as $filter) {
+        foreach ($values as $key => $value) {
+            $values[$key] = $filter->filter($value, $key, $this->types[$key] ?? null);
+        }
+    }
+
+    return $values;
+}
 ```
 
 With the above code, you can create a user model, add filters to it and filter values with it:
@@ -145,8 +156,9 @@ Excludes
 
 ### Fine-Grained Control
 
-Two properties are available to the `filter` method within the `Pop\Filter\AbstractFilter` class.
-They are `excludeByName` and `excludeByType`. With them, you can have fine-tuned control over
+Every filter instance built on `Pop\Filter\AbstractFilter` (e.g. `Pop\Filter\Filter`) has two properties,
+`excludeByName` and `excludeByType`, that its `filter()` method checks before applying the callable. With
+them, you can have fine-tuned control over
 what values actually get filtered. For example, if you don't want to filter any values named
 `username`, you can do this:
 
@@ -175,29 +187,5 @@ $values = [
 The fourth parameter of the filter constructor is `$excludeByType` and that is useful for
 excluding a number of values at once that are all of the same type, for example, textareas
 within a form object.
-
-[Top](#pop-filter)
-
-Filtering Multiple Named Values
---------------------------------
-
-When a class uses `Pop\Filter\FilterableTrait` and wants exclude-by-name support (rather than the blanket
-`filterAll()`), it can call the trait's `filterEach()` method instead of hand-writing the loop shown above:
-
-```php
-class User
-{
-    use FilterableTrait;
-
-    public function filter(array $values): array
-    {
-        return $this->filterEach($values);
-    }
-}
-```
-
-`filterEach()` passes each array key through as the `$name` argument to every registered filter, so
-`excludeByName` is honored automatically. It does not have any notion of a value's `$type` — a class that
-needs `excludeByType` support as well still needs its own loop with a way to look up each value's type.
 
 [Top](#pop-filter)
